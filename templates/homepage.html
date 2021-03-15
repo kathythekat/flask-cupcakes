@@ -1,0 +1,33 @@
+{%extends "base.html"%}
+
+{%block title%}
+Cupcakes
+{%endblock%}
+
+{%block content%}
+    <ul id="cupcake-list">
+
+    </ul>
+
+    <h1>Add a Cupcake</h1>
+    <form id="cupcake-form" action="/api/cupcakes" method="POST">
+        <label for="flavor">Flavor</label>
+        <input type="text" id="flavor" name="flavor">
+        <br>
+        <label for="size">Size</label>
+        <input type="text" id="size" name="size">
+        <br>
+        <label for="rating">Rating</label>
+        <input type="text" id="rating" name="rating">
+        <br>
+        <label for="image">Image URL</label>
+        <input type="text" id="image" name="image">
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+{%endblock%}
+
+{%block script%}
+<script src="/static/cupcakes.js"></script>
+{%endblock%}

@@ -1,5 +1,5 @@
 """Flask app for Cupcakes"""
-from flask import Flask, redirect, request, jsonify
+from flask import Flask, redirect, request, jsonify, render_template
 # from flask_debugtoolbar import DebugToolbarExtension
 
 from models import db, connect_db, Cupcake
@@ -33,9 +33,11 @@ def get_cupcake_data():
 
 @app.route("/api/cupcakes/<int:cupcake_id>")
 def list_single_cupcake(cupcake_id):
-    """Return JSON {'cupcake': {id, flavor, size, rating, image}}"""
+    """Return JSON {'cupcake': {id, flavor, size, rating, image, ingredients:{}}}"""
 
     cupcake = Cupcake.query.get_or_404(cupcake_id)
+    # ingredients = cupcake.ingredients
+    # cupcake['ingredients'] = ingredients
     serialized = cupcake.serialize()
 
     return jsonify(cupcake=serialized)
@@ -77,7 +79,7 @@ def update_cupcake(cupcake_id):
   cupcake.size = size
   cupcake.rating = rating
   cupcake.image = image
-  
+
   db.session.commit()
 
   serialized = cupcake.serialize()
@@ -95,8 +97,11 @@ def delete_cupcake(cupcake_id):
   return (jsonify(message = "Deleted"), 200)
 
 
+@app.route("/")
+def display_home():
+    """Display homepage with list of cupcakes and form to add new cupcake"""
 
+    return render_template("homepage.html")
 
- 
-
-
+#/api/cupcakes/search
+#cupcakes = Cupcake.query.filter(Cupcake.flavor.like(search_flavor)).all()
